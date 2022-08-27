@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:task/constants/style.dart';
+import 'package:http/http.dart' as http;
+import 'package:task/services/api_service.dart';
 import 'package:task/widgets/post_container/post_container.dart';
 import '../../model/post/post_model.dart';
-import '../../services/post_service.dart';
 
 class PostScreen extends StatefulWidget {
+  final num id;
+
+  const PostScreen({required this.id});
   @override
   State<PostScreen> createState() => _PostScreenState();
 }
@@ -21,13 +25,11 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   getPostData() async {
-    posts = await PostService().getPosts();
+    posts = await APIService.getPosts();
 
-    if (posts != null) {
-      setState(() {
-        isLoading = true;
-      });
-    }
+    setState(() {
+      isLoading = true;
+    });
   }
 
   @override
