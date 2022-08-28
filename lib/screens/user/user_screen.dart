@@ -16,8 +16,8 @@ class UserScreen extends StatefulWidget {
 }
 
 class UserScreenState extends State<UserScreen> {
-  bool isLoading = false;
-  UserModel user = UserModel();
+  bool isLoaded = false;
+  List<UserModel> user = [];
 
   @override
   void initState() {
@@ -27,28 +27,36 @@ class UserScreenState extends State<UserScreen> {
   }
 
   getUserData(id) async {
-    user = await APIService.getUser(id) ?? UserModel();
+    user = await APIService.getUser(id);
 
     setState(() {
-      isLoading = true;
+      isLoaded = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: isLoading,
+        visible: isLoaded,
         replacement:
             const Center(child: CircularProgressIndicator(color: primaryColor)),
-        child: Column(
-          children: [
-            UserDetailContainer(title: "Name", body: user.name ?? ''),
-            UserDetailContainer(title: "Username", body: user.username ?? ''),
-            UserDetailContainer(
-                title: "Address", body: user.address!.street ?? ''),
-            UserDetailContainer(
-                title: "Zipcode", body: user.address!.zipcode ?? ''),
-          ],
-        ));
+        child: ListView.builder(
+            itemCount: user.length,
+            itemBuilder: (context, index) {
+              return Column(children: [
+                UserDetailContainer(
+                    title: 'Name', body: user[index].name ?? ""),
+                UserDetailContainer(
+                    title: 'Username', body: user[index].username ?? ""),
+                UserDetailContainer(
+                    title: 'Address',
+                    body: user[index].address!.street! +
+                        ", " +
+                        user[index].address!.city!),
+                UserDetailContainer(
+                    title: 'Zip-code',
+                    body: user[index].address!.zipcode ?? ""),
+              ]);
+            }));
   }
 }
