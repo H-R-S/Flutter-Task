@@ -9,6 +9,8 @@ class UserDetailContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Container(
@@ -17,10 +19,17 @@ class UserDetailContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            Text(body, style: const TextStyle(fontSize: 16))
+            SizedBox(
+              width: width * 0.40,
+              child: Text(title,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(
+                width: width * 0.40,
+                child: Text(body,
+                    textAlign: TextAlign.end,
+                    style: const TextStyle(fontSize: 16)))
           ],
         ),
       ),
