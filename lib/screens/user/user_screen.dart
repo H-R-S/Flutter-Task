@@ -52,6 +52,8 @@ class UserScreenState extends State<UserScreen> {
                     title: 'Address',
                     body: user[index].address!.street! +
                         ", " +
+                        user[index].address!.suite! +
+                        ", " +
                         user[index].address!.city!),
                 UserDetailContainer(
                     title: 'Zip-code',
